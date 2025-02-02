@@ -48,6 +48,19 @@ app.get('/', async (req, res) => {
   }
 });
 
+app.get('/user', async (req, res) => {
+  try {
+    const db = client.db('p40Project'); 
+    const collection = db.collection('User'); 
+
+    const data = await collection.find({}).toArray(); 
+    res.json(data); // Send the data as JSON
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'Failed to fetch data' });
+  }
+});
+
 // Start the server and connect to MongoDB
 app.listen(PORT, async () => {
   console.log(`Server is running on http://localhost:${PORT}`);
